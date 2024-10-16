@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>前后缀表达式 | Orion Blog</title><meta name="author" content="Orion"><meta name="description" content="Here's Orion"><meta name="keywords" content="技术博客,Orion,BUPT北京邮电大学,本科生,人工智能,AI算法工程师,机器学习,深度学习,计算机视觉,自然语言处理,NLP,CV,大模型"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"><link rel="icon" href="https://testingcf.jsdelivr.net/gh/nanzhi84/blog-images/202409190134514.png"><link rel="preload" as="image" href="https://testingcf.jsdelivr.net/gh/nanzhi84/blog-images/202409181543316.png"><link rel="preconnect" href="https://s4.zstatic.net"><script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="only x" onload='this.onload=null,this.media="all"'><link rel="preconnect" href="https://fonts.googleapis.cn"><link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" media="only x" onload='this.onload=null,this.media="all"'><script>const mixins={}</script><script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="/js/lib/highlight.js"></script><script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><script src="/js/lib/math.js"></script><script src="/js/lib/preview.js"></script><script src="https://s4.zstatic.net/ajax/libs/waline/2.15.8/waline.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/waline/2.15.8/waline.min.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/waline/2.15.8/waline-meta.min.css"><script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script><link rel="stylesheet" href="/css/main.css"><link rel="preconnect" href="https://static-argvchs.netlify.app"><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax=SVG]{direction:ltr}mjx-container[jax=SVG]>svg{overflow:visible}mjx-container[jax=SVG][display=true]{display:block;text-align:center;margin:1em 0}mjx-container[jax=SVG][justify=left]{text-align:left}mjx-container[jax=SVG][justify=right]{text-align:right}g[data-mml-node=merror]>g{fill:red;stroke:red}g[data-mml-node=merror]>rect[data-background]{fill:yellow;stroke:none}g[data-mml-node=mtable]>line[data-line]{stroke-width:70px;fill:none}g[data-mml-node=mtable]>rect[data-frame]{stroke-width:70px;fill:none}g[data-mml-node=mtable]>.mjx-dashed{stroke-dasharray:140}g[data-mml-node=mtable]>.mjx-dotted{stroke-linecap:round;stroke-dasharray:0,140}g[data-mml-node=mtable]>svg{overflow:visible}[jax=SVG] mjx-tool{display:inline-block;position:relative;width:0;height:0}[jax=SVG] mjx-tool>mjx-tip{position:absolute;top:0;left:0}mjx-tool>mjx-tip{display:inline-block;padding:.2em;border:1px solid #888;font-size:70%;background-color:#f8f8f8;color:#000;box-shadow:2px 2px 5px #aaa}g[data-mml-node=maction][data-toggle]{cursor:pointer}mjx-status{display:block;position:fixed;left:1em;bottom:1em;min-width:25%;padding:.2em .4em;border:1px solid #888;font-size:90%;background-color:#f8f8f8;color:#000}foreignObject[data-mjx-xml]{font-family:initial;line-height:normal;overflow:visible}.MathJax path{stroke-width:3}mjx-container[display=true]{overflow:auto hidden}mjx-container[display=true]+br{display:none}</style></head><body><div id="layout"><transition name="fade"><div id="loading" v-show="loading"><div id="loading-circle"><h2>LOADING</h2><p>加载过慢请开启缓存 浏览器默认开启</p><img src="https://testingcf.jsdelivr.net/gh/nanzhi84/blog-images/202409201808995.gif"></div></div></transition><div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}"><nav id="desktop-menu"><a class="title" href="/"><span>ORION BLOG</span></a><a href="/"><i class="fa-solid fa-house fa-fw"></i> <span>&ensp;Home</span></a><a href="/about"><i class="fa-solid fa-id-card fa-fw"></i> <span>&ensp;About</span></a><a href="/archives"><i class="fa-solid fa-box-archive fa-fw"></i> <span>&ensp;Archives</span></a><a href="/categories"><i class="fa-solid fa-bookmark fa-fw"></i> <span>&ensp;Categories</span></a><a href="/tags"><i class="fa-solid fa-tags fa-fw"></i> <span>&ensp;Tags</span></a></nav><nav id="mobile-menu"><div class="title" @click="showMenuItems = !showMenuItems"><i class="fa-solid fa-bars fa-fw"></i> <span>&emsp;ORION BLOG</span></div><transition name="slide"><div class="items" v-show="showMenuItems"><a href="/"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-house fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Home</div></div></a><a href="/about"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-id-card fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">About</div></div></a><a href="/archives"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-box-archive fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Archives</div></div></a><a href="/categories"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-bookmark fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Categories</div></div></a><a href="/tags"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-tags fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Tags</div></div></a></div></transition></nav></div><transition name="fade"><div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div></transition><div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'"><div class="article"><div><h1>前后缀表达式</h1></div><div class="info"><span class="date"><span class="icon"><i class="fa-solid fa-calendar fa-fw"></i></span> 2024/10/15</span><span class="category"><a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="icon"><i class="fa-solid fa-bookmark fa-fw"></i></span> 数据结构</a></span><span class="tags"><span class="icon"><i class="fa-solid fa-tags fa-fw"></i></span> <span class="tag"><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color:#03a9f4">数据结构</a></span> <span class="tag"><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="color:#ffa2c4">C语言</a></span> <span class="tag"><a href="/tags/%E6%A0%88/" style="color:#03a9f4">栈</a></span></span></div><div class="content" v-pre><h1><span id="gai-nian-ding-yi">概念定义</span><a href="#gai-nian-ding-yi" class="header-anchor"></a></h1><ol type="1"><li><p>中缀表达式：操作符在操作数中间，就是平时我们计算识别的算术表达式，例如 3+4-5。</p><p>计算方法：略。</p></li><li><p>前缀表达式（波兰表达式）：操作符在操作数的前面，比如 +-543。</p><p>计算方法：遇到操作符挨着两个数字逆序计算然后求解消去，比如-54=4-5计算后得到+（-1）3=3-1=2。</p></li><li><p>后缀表达式（逆波兰表达式）：操作符在操作数的后面，比如 34+5-。</p><p>计算方法：遇到操作符后挨着两个数字顺序计算然后求解消去，比如34+=3+4计算后得到75-=7-5=2。</p></li></ol><h1><span id="suan-fa-si-xiang">算法思想</span><a href="#suan-fa-si-xiang" class="header-anchor"></a></h1><p>中缀表达式转前缀表达式：暂略。</p><p>中缀表达式转后缀表达式：</p><ol type="1"><li>我们需要初始两个栈：OPTR栈-寄存运算符（过渡栈），OPND栈-寄存操作数或运算符（最终栈）。</li><li>然后依次读入表达式字符，遵守以下规则：<ol type="1"><li>如果读入的是操作数，压入OPND栈。</li><li>如果读入的是运算符：<ol type="1"><li>如果是左括号'('，直接压入OPTR栈顶，因为这是优先级最高的。</li><li>如果是右括号')'，依次弹出OPTR栈中的运算符并压入OPND栈，直到OPTR栈顶元素会左括号'('，弹出结束。</li><li>如果是运算符，和当前OPTR栈顶元素做优先级比较：如果当前运算符优先级大于栈顶元素，直接压入OPTR栈顶；如果当前运算符优先级小于等于栈顶元素，将栈中大于当前运算符的元素依次压入OPND栈中直到遇到平级或低级。</li></ol></li></ol></li><li>重复以上步骤，直到表达式结束，OPND栈顶为后缀表达式，OPTR栈顶为空。</li></ol><p>其实思想和中缀表达式求解一样，不过我们现在不能直接运算了，而是需要把字符保留罢了。</p><h1><span id="dai-ma-shi-xian">代码实现</span><a href="#dai-ma-shi-xian" class="header-anchor"></a></h1><h3><span id="zhong-zhui-biao-da-shi-zhuan-qian-zhui-biao-da-shi">中缀表达式转前缀表达式</span><a href="#zhong-zhui-biao-da-shi-zhuan-qian-zhui-biao-da-shi" class="header-anchor"></a></h3><p>暂略。</p><h3><span id="zhong-zhui-biao-da-shi-zhuan-hou-zhui-biao-da-shi">中缀表达式转后缀表达式</span><a href="#zhong-zhui-biao-da-shi-zhuan-hou-zhui-biao-da-shi" class="header-anchor"></a></h3><p>代码写的很差，仅作记录不喜勿喷，但欢迎指点。</p><pre class="c"><code>#include &lt;stdio.h&gt;
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>前后缀表达式 | Orion Blog</title><meta name="author" content="Orion"><meta name="description" content="Here's Orion"><meta name="keywords" content="技术博客,Orion,BUPT北京邮电大学,本科生,人工智能,AI算法工程师,机器学习,深度学习,计算机视觉,自然语言处理,NLP,CV,大模型"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"><link rel="icon" href="https://testingcf.jsdelivr.net/gh/nanzhi84/blog-images/202409190134514.png"><link rel="preload" as="image" href="https://testingcf.jsdelivr.net/gh/nanzhi84/blog-images/202409181543316.png"><link rel="preconnect" href="https://s4.zstatic.net"><script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="only x" onload='this.onload=null,this.media="all"'><link rel="preconnect" href="https://fonts.googleapis.cn"><link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" media="only x" onload='this.onload=null,this.media="all"'><script>const mixins={}</script><script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="/js/lib/highlight.js"></script><script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css"><script src="/js/lib/math.js"></script><script src="/js/lib/preview.js"></script><script src="https://s4.zstatic.net/ajax/libs/waline/2.15.8/waline.min.js"></script><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/waline/2.15.8/waline.min.css"><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/waline/2.15.8/waline-meta.min.css"><script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script><link rel="stylesheet" href="/css/main.css"><link rel="preconnect" href="https://static-argvchs.netlify.app"><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax=SVG]{direction:ltr}mjx-container[jax=SVG]>svg{overflow:visible}mjx-container[jax=SVG][display=true]{display:block;text-align:center;margin:1em 0}mjx-container[jax=SVG][justify=left]{text-align:left}mjx-container[jax=SVG][justify=right]{text-align:right}g[data-mml-node=merror]>g{fill:red;stroke:red}g[data-mml-node=merror]>rect[data-background]{fill:yellow;stroke:none}g[data-mml-node=mtable]>line[data-line]{stroke-width:70px;fill:none}g[data-mml-node=mtable]>rect[data-frame]{stroke-width:70px;fill:none}g[data-mml-node=mtable]>.mjx-dashed{stroke-dasharray:140}g[data-mml-node=mtable]>.mjx-dotted{stroke-linecap:round;stroke-dasharray:0,140}g[data-mml-node=mtable]>svg{overflow:visible}[jax=SVG] mjx-tool{display:inline-block;position:relative;width:0;height:0}[jax=SVG] mjx-tool>mjx-tip{position:absolute;top:0;left:0}mjx-tool>mjx-tip{display:inline-block;padding:.2em;border:1px solid #888;font-size:70%;background-color:#f8f8f8;color:#000;box-shadow:2px 2px 5px #aaa}g[data-mml-node=maction][data-toggle]{cursor:pointer}mjx-status{display:block;position:fixed;left:1em;bottom:1em;min-width:25%;padding:.2em .4em;border:1px solid #888;font-size:90%;background-color:#f8f8f8;color:#000}foreignObject[data-mjx-xml]{font-family:initial;line-height:normal;overflow:visible}.MathJax path{stroke-width:3}mjx-container[display=true]{overflow:auto hidden}mjx-container[display=true]+br{display:none}</style></head><body><div id="layout"><transition name="fade"><div id="loading" v-show="loading"><div id="loading-circle"><h2>LOADING</h2><p>加载过慢请开启缓存 浏览器默认开启</p><img src="https://testingcf.jsdelivr.net/gh/nanzhi84/blog-images/202409201808995.gif"></div></div></transition><div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}"><nav id="desktop-menu"><a class="title" href="/"><span>ORION BLOG</span></a><a href="/"><i class="fa-solid fa-house fa-fw"></i> <span>&ensp;Home</span></a><a href="/about"><i class="fa-solid fa-id-card fa-fw"></i> <span>&ensp;About</span></a><a href="/archives"><i class="fa-solid fa-box-archive fa-fw"></i> <span>&ensp;Archives</span></a><a href="/categories"><i class="fa-solid fa-bookmark fa-fw"></i> <span>&ensp;Categories</span></a><a href="/tags"><i class="fa-solid fa-tags fa-fw"></i> <span>&ensp;Tags</span></a></nav><nav id="mobile-menu"><div class="title" @click="showMenuItems = !showMenuItems"><i class="fa-solid fa-bars fa-fw"></i> <span>&emsp;ORION BLOG</span></div><transition name="slide"><div class="items" v-show="showMenuItems"><a href="/"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-house fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Home</div></div></a><a href="/about"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-id-card fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">About</div></div></a><a href="/archives"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-box-archive fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Archives</div></div></a><a href="/categories"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-bookmark fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Categories</div></div></a><a href="/tags"><div class="item"><div style="min-width:20px;max-width:50px;width:10%"><i class="fa-solid fa-tags fa-fw"></i></div><div style="min-width:100px;max-width:150%;width:20%">Tags</div></div></a></div></transition></nav></div><transition name="fade"><div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div></transition><div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'"><div class="article"><div><h1>前后缀表达式</h1></div><div class="info"><span class="date"><span class="icon"><i class="fa-solid fa-calendar fa-fw"></i></span> 2024/10/15</span><span class="category"><a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="icon"><i class="fa-solid fa-bookmark fa-fw"></i></span> 数据结构</a></span><span class="tags"><span class="icon"><i class="fa-solid fa-tags fa-fw"></i></span> <span class="tag"><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color:#00a596">数据结构</a></span> <span class="tag"><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="color:#00bcd4">C语言</a></span> <span class="tag"><a href="/tags/%E6%A0%88/" style="color:#ffa2c4">栈</a></span></span></div><div class="content" v-pre><h1><span id="gai-nian-ding-yi">概念定义</span><a href="#gai-nian-ding-yi" class="header-anchor"></a></h1><ol type="1"><li><p>中缀表达式：操作符在操作数中间，就是平时我们计算识别的算术表达式，例如 3+4-5。</p><p>计算方法：略。</p></li><li><p>前缀表达式（波兰表达式）：操作符在操作数的前面，比如 +-543。</p><p>计算方法：遇到操作符挨着两个数字逆序计算然后求解消去，比如-54=4-5计算后得到+（-1）3=3-1=2。</p></li><li><p>后缀表达式（逆波兰表达式）：操作符在操作数的后面，比如 34+5-。</p><p>计算方法：遇到操作符后挨着两个数字顺序计算然后求解消去，比如34+=3+4计算后得到75-=7-5=2。</p></li></ol><span id="more"></span><h1><span id="suan-fa-si-xiang">算法思想</span><a href="#suan-fa-si-xiang" class="header-anchor"></a></h1><p><strong>中缀表达式转前缀表达式：</strong></p><ol type="1"><li>我们需要初始两个栈：OPTR栈-寄存运算符（过渡栈），OPND栈-寄存操作数或运算符（最终栈）。</li><li>然后从右往左依次读入表达式字符，遵守以下规则：<ol type="1"><li>如果读入的是操作数，压入OPND栈。</li><li>如果读入的是运算符：<ol type="1"><li>如果是右括号')'，直接压入OPTR栈顶，因为这是优先级最高的。</li><li>如果是左括号'('，依次弹出OPTR栈中的运算符并压入OPND栈，直到OPTR栈顶元素为左括号'('，弹出结束。</li><li>如果是运算符，和当前OPTR栈顶元素做优先级比较：如果当前运算符优先级大于栈顶元素，直接压入OPTR栈顶；如果当前运算符优先级小于等于栈顶元素，将栈中大于当前运算符的元素依次压入OPND栈中直到遇到平级或低级。</li></ol></li></ol></li><li>重复以上步骤，直到表达式结束，OPND从栈顶到栈底的顺序为前缀表达式，OPTR栈顶为空。</li></ol><p><strong>中缀表达式转后缀表达式：</strong></p><ol type="1"><li>我们需要初始两个栈：OPTR栈-寄存运算符（过渡栈），OPND栈-寄存操作数或运算符（最终栈）。</li><li>然后从左往右依次读入表达式字符，遵守以下规则：<ol type="1"><li>如果读入的是操作数，压入OPND栈。</li><li>如果读入的是运算符：<ol type="1"><li>如果是左括号'('，直接压入OPTR栈顶，因为这是优先级最高的。</li><li>如果是右括号')'，依次弹出OPTR栈中的运算符并压入OPND栈，直到OPTR栈顶元素为左括号'('，弹出结束。</li><li>如果是运算符，和当前OPTR栈顶元素做优先级比较：如果当前运算符优先级大于栈顶元素，直接压入OPTR栈顶；如果当前运算符优先级小于等于栈顶元素，将栈中大于当前运算符的元素依次压入OPND栈中直到遇到平级或低级。</li></ol></li></ol></li><li>重复以上步骤，直到表达式结束，OPND从栈底到栈顶的顺序为后缀表达式，OPTR栈顶为空。</li></ol><p>其实思想和中缀表达式求解一样，不过我们现在不能直接运算了，而是需要把字符保留罢了。</p><h1><span id="dai-ma-shi-xian">代码实现</span><a href="#dai-ma-shi-xian" class="header-anchor"></a></h1><p>代码写的很差，仅作记录不喜勿喷，但欢迎指点。</p><h3><span id="zhong-zhui-biao-da-shi-zhuan-qian-zhui-biao-da-shi">中缀表达式转前缀表达式</span><a href="#zhong-zhui-biao-da-shi-zhuan-qian-zhui-biao-da-shi" class="header-anchor"></a></h3><pre class="c"><code>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;ctype.h&gt;
 #include &lt;string.h&gt;
@@ -61,6 +61,429 @@ void printStacks(char* optrStack, int optrTop, char** opndStack, int opndTop) {
     printf("\n\n");
 }
 
+// 将运算符转换为字符串的函数
+char* operatorToString(char op) {
+    char* resultStr = (char*)malloc(2 * sizeof(char));
+    if (!resultStr) {
+        printf("内存分配失败\n");
+        exit(EXIT_FAILURE);
+    }
+    resultStr[0] = op;
+    resultStr[1] = '\0';
+    return resultStr;
+}
+
+// 中缀表达式转前缀表达式
+char** infixToPrefix(const char* infix) {
+    // 初始化两个栈，这里的opnd栈存放字符串，而optr栈是运算符栈
+    char* optrStack = (char*)malloc(MAX_STACK_SIZE * sizeof(char));
+    char** opndStack = (char**)malloc(MAX_STACK_SIZE * sizeof(char*));
+
+    if (!optrStack || !opndStack) {
+        printf("内存分配失败\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // 初始化两个栈的指针
+    int optrTop = -1;
+    int opndTop = -1;
+
+    int i = strlen(infix) - 1;
+    char token;
+
+    printf("中缀表达式: %s\n\n", infix);
+
+    // 遍历表达式
+    while (i &gt;= 0) {
+        token = infix[i];
+        printf("读取字符：%c\n", token);
+
+        // 跳过空格
+        if (isspace(token)) {
+            i--;
+            continue;
+        }
+
+        // 如果是数字，处理多位数字
+        if (isdigit(token)) {
+            char* s = (char*)malloc(MAX_STACK_SIZE * sizeof(char));
+            if (!s) {
+                printf("内存分配失败\n");
+                exit(EXIT_FAILURE);
+            }
+            int p = 0;
+            while (i &gt;= 0 &amp;&amp; isdigit(infix[i])) {
+                s[p++] = infix[i--];
+            }
+            s[p] = '\0';
+            // 反转字符串
+            for (int k = 0; k &lt; p / 2; k++) {
+                char temp = s[k];
+                s[k] = s[p - 1 - k];
+                s[p - 1 - k] = temp;
+            }
+            opndStack[++opndTop] = s;
+            printf("将操作数 %s 压入 OPND 栈\n", s);
+            printStacks(optrStack, optrTop, opndStack, opndTop);
+            continue;
+        }
+
+        // 如果是右括号，直接压入 OPTR 栈
+        if (token == ')') {
+            if (optrTop &gt;= MAX_STACK_SIZE - 1) {
+                printf("错误: 运算符栈溢出\n");
+                free(optrStack);
+                for (int j = 0; j &lt;= opndTop; j++) {
+                    free(opndStack[j]);
+                }
+                free(opndStack);
+                exit(EXIT_FAILURE);
+            }
+            optrStack[++optrTop] = token;
+            printf("将 ')' 压入 OPTR 栈\n");
+            printStacks(optrStack, optrTop, opndStack, opndTop);
+            i--;
+            continue;
+        }
+
+        // 如果是左括号，处理括号内的所有运算
+        if (token == '(') {
+            printf("遇到 '('，处理括号内的所有运算\n");
+            while (optrTop &gt;= 0 &amp;&amp; optrStack[optrTop] != ')') {
+                if (optrTop &lt; 0 || opndTop &lt; 1) {
+                    printf("错误: 表达式不合法\n");
+                    free(optrStack);
+                    for (int j = 0; j &lt;= opndTop; j++) {
+                        free(opndStack[j]);
+                    }
+                    free(opndStack);
+                    exit(EXIT_FAILURE);
+                }
+                char op = optrStack[optrTop--];
+                char* resultStr = operatorToString(op);
+                opndStack[++opndTop] = resultStr;
+                printStacks(optrStack, optrTop, opndStack, opndTop);
+            }
+            if (optrTop &gt;= 0) {
+                optrTop--; // 弹出右括号
+            }
+            i--;
+            continue;
+        }
+
+        // 如果是运算符，处理优先级
+        while (optrTop &gt;= 0 &amp;&amp; precedence(optrStack[optrTop]) &gt;= precedence(token)) {
+            if (optrTop &lt; 0 || opndTop &lt; 1) {
+                printf("错误: 表达式不合法\n");
+                free(optrStack);
+                for (int j = 0; j &lt;= opndTop; j++) {
+                    free(opndStack[j]);
+                }
+                free(opndStack);
+                exit(EXIT_FAILURE);
+            }
+            char op = optrStack[optrTop--];
+            char* resultStr = operatorToString(op);
+            opndStack[++opndTop] = resultStr;
+            printStacks(optrStack, optrTop, opndStack, opndTop);
+        }
+
+        // 优先级大于栈顶直接入栈
+        if (optrTop &gt;= MAX_STACK_SIZE - 1) {
+            printf("错误: 运算符栈溢出\n");
+            free(optrStack);
+            for (int j = 0; j &lt;= opndTop; j++) {
+                free(opndStack[j]);
+            }
+            free(opndStack);
+            exit(EXIT_FAILURE);
+        }
+        optrStack[++optrTop] = token;
+        printf("将运算符 '%c' 压入 OPTR 栈\n", token);
+        printStacks(optrStack, optrTop, opndStack, opndTop);
+
+        i--;
+    }
+
+    // 处理剩余的运算符
+    while (optrTop &gt;= 0) {
+        if (optrTop &lt; 0 || opndTop &lt; 1) {
+            printf("错误: 表达式不合法\n");
+            free(optrStack);
+            for (int j = 0; j &lt;= opndTop; j++) {
+                free(opndStack[j]);
+            }
+            free(opndStack);
+            exit(EXIT_FAILURE);
+        }
+        char op = optrStack[optrTop--];
+        char* resultStr = operatorToString(op);
+        opndStack[++opndTop] = resultStr;
+        printStacks(optrStack, optrTop, opndStack, opndTop);
+    }
+
+    if (optrTop != -1) {
+        printf("错误: 表达式不合法\n");
+        free(optrStack);
+        for (int j = 0; j &lt;= opndTop; j++) {
+            free(opndStack[j]);
+        }
+        free(opndStack);
+        exit(EXIT_FAILURE);
+    }
+
+    char** prefix = (char**)malloc((MAX_STACK_SIZE + 1) * sizeof(char*));
+    if (!prefix) {
+        printf("内存分配失败\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int j = 0; j &lt;= opndTop; j++) {
+        prefix[j] = (char*)malloc(strlen(opndStack[opndTop - j]) + 1);
+        if (!prefix[j]) {
+            printf("内存分配失败\n");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(prefix[j], opndStack[opndTop - j]);
+        free(opndStack[opndTop - j]);
+    }
+    prefix[opndTop + 1] = NULL;
+
+    free(optrStack);
+    free(opndStack);
+
+    return prefix;
+}
+
+// 前缀表达式求值
+int prefixExpressionCompute(char** prefix) {
+    // 保存中间数字的栈
+    int* stack = (int*)malloc(MAX_STACK_SIZE * sizeof(int));
+    // 栈顶指针
+    int top = -1;
+
+    // 计算前缀表达式的长度
+    int length = 0;
+    while (prefix[length] != NULL) {
+        length++;
+    }
+
+    // 从后向前遍历前缀表达式
+    for (int i = length - 1; i &gt;= 0; i--) {
+        if (isdigit(prefix[i][0])) {
+            stack[++top] = atoi(prefix[i]);
+        }
+        else {
+            int a = stack[top--];
+            int b = stack[top--];
+            int result = applyOperator(prefix[i][0], a, b);
+            stack[++top] = result;
+        }
+    }
+
+    if (top != 0) {
+        printf("错误: 表达式不合法\n");
+        free(stack);
+        exit(EXIT_FAILURE);
+    }
+    int result = stack[top];
+    free(stack);
+    return result;
+}
+
+int main() {
+    const char* expression = "5+2*5+(60/3+7*3)+2";
+    char** prefix = infixToPrefix(expression);
+    printf("前缀表达式: ");
+    for (int i = 0; prefix[i] != NULL; i++) {
+        printf("%s ", prefix[i]);
+    }
+    printf("\n");
+    printf("前缀表达式求值: %d\n", prefixExpressionCompute(prefix));
+    for (int i = 0; prefix[i] != NULL; i++) {
+        free(prefix[i]);
+    }
+    free(prefix);
+    return 0;
+}</code></pre><p>输出结果</p><pre><code>中缀表达式: 5+2*5+(60/3+7*3)+2
+
+读取字符：2
+将操作数 2 压入 OPND 栈
+OPTR栈: 空
+OPND栈: 2
+
+读取字符：+
+将运算符 '+' 压入 OPTR 栈
+OPTR栈: +
+OPND栈: 2
+
+读取字符：)
+将 ')' 压入 OPTR 栈
+OPTR栈: + )
+OPND栈: 2
+
+读取字符：3
+将操作数 3 压入 OPND 栈
+OPTR栈: + )
+OPND栈: 2 3
+
+读取字符：*
+将运算符 '*' 压入 OPTR 栈
+OPTR栈: + ) *
+OPND栈: 2 3
+
+读取字符：7
+将操作数 7 压入 OPND 栈
+OPTR栈: + ) *
+OPND栈: 2 3 7
+
+读取字符：+
+OPTR栈: + )
+OPND栈: 2 3 7 *
+
+将运算符 '+' 压入 OPTR 栈
+OPTR栈: + ) +
+OPND栈: 2 3 7 *
+
+读取字符：3
+将操作数 3 压入 OPND 栈
+OPTR栈: + ) +
+OPND栈: 2 3 7 * 3
+
+读取字符：/
+将运算符 '/' 压入 OPTR 栈
+OPTR栈: + ) + /
+OPND栈: 2 3 7 * 3
+
+读取字符：0
+将操作数 60 压入 OPND 栈
+OPTR栈: + ) + /
+OPND栈: 2 3 7 * 3 60
+
+读取字符：(
+遇到 '('，处理括号内的所有运算
+OPTR栈: + ) +
+OPND栈: 2 3 7 * 3 60 /
+
+OPTR栈: + )
+OPND栈: 2 3 7 * 3 60 / +
+
+读取字符：+
+OPTR栈: 空
+OPND栈: 2 3 7 * 3 60 / + +
+
+将运算符 '+' 压入 OPTR 栈
+OPTR栈: +
+OPND栈: 2 3 7 * 3 60 / + +
+
+读取字符：5
+将操作数 5 压入 OPND 栈
+OPTR栈: +
+OPND栈: 2 3 7 * 3 60 / + + 5
+
+读取字符：*
+将运算符 '*' 压入 OPTR 栈
+OPTR栈: + *
+OPND栈: 2 3 7 * 3 60 / + + 5
+
+读取字符：2
+将操作数 2 压入 OPND 栈
+OPTR栈: + *
+OPND栈: 2 3 7 * 3 60 / + + 5 2
+
+读取字符：+
+OPTR栈: +
+OPND栈: 2 3 7 * 3 60 / + + 5 2 *
+
+OPTR栈: 空
+OPND栈: 2 3 7 * 3 60 / + + 5 2 * +
+
+将运算符 '+' 压入 OPTR 栈
+OPND栈: 2 3 7 * 3 60 / + + 5 2 * +
+
+读取字符：5
+将操作数 5 压入 OPND 栈
+OPTR栈: +
+OPND栈: 2 3 7 * 3 60 / + + 5 2 * + 5
+
+OPTR栈: 空
+OPND栈: 2 3 7 * 3 60 / + + 5 2 * + 5 +
+
+前缀表达式: + 5 + * 2 5 + + / 60 3 * 7 3 2
+前缀表达式求值: 58</code></pre><h3><span id="zhong-zhui-biao-da-shi-zhuan-hou-zhui-biao-da-shi">中缀表达式转后缀表达式</span><a href="#zhong-zhui-biao-da-shi-zhuan-hou-zhui-biao-da-shi" class="header-anchor"></a></h3><pre class="c"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;string.h&gt;
+
+#define MAX_STACK_SIZE 100
+
+// 判断运算符优先级
+int precedence(char op) {
+    switch (op) {
+    case '+':
+    case '-':
+        return 1;
+    case '*':
+    case '/':
+        return 2;
+    default:
+        return 0;
+    }
+}
+
+// 执行运算
+int applyOperator(char op, int a, int b) {
+    switch (op) {
+    case '+': return a + b;
+    case '-': return a - b;
+    case '*': return a * b;
+    case '/':
+        if (b == 0) {
+            printf("错误: 除以零\n");
+            exit(EXIT_FAILURE);
+        }
+        return a / b;
+    default:
+        printf("错误: 无效的运算符 '%c'\n", op);
+        exit(EXIT_FAILURE);
+    }
+}
+
+// 打印栈的内容, opndStack 为 char** 类型
+void printStacks(char* optrStack, int optrTop, char** opndStack, int opndTop) {
+    printf("OPTR栈: ");
+    if (optrTop == -1) {
+        printf("空");
+    }
+    else {
+        for (int i = 0; i &lt;= optrTop; i++) {
+            printf("%c ", optrStack[i]);
+        }
+    }
+
+    printf("\nOPND栈: ");
+    if (opndTop == -1) {
+        printf("空");
+    }
+    else {
+        for (int i = 0; i &lt;= opndTop; i++) {
+            printf("%s ", opndStack[i]);
+        }
+    }
+    printf("\n\n");
+}
+
+// 将运算符转换为字符串的函数
+char* operatorToString(char op) {
+    char* resultStr = (char*)malloc(2 * sizeof(char));
+    if (!resultStr) {
+        printf("内存分配失败\n");
+        exit(EXIT_FAILURE);
+    }
+    resultStr[0] = op;
+    resultStr[1] = '\0';
+    return resultStr;
+}
+
 // 中缀表达式转后缀表达式
 char** infixToPostfix(const char* infix) {
     // 初始化两个栈，这里的opnd栈存放字符串，而optr栈是运算符栈
@@ -77,7 +500,7 @@ char** infixToPostfix(const char* infix) {
     int opndTop = -1;
 
     int i = 0;
-    char token; 
+    char token;
 
     printf("中缀表达式: %s\n\n", infix);
 
@@ -140,15 +563,8 @@ char** infixToPostfix(const char* infix) {
                     free(opndStack);
                     exit(EXIT_FAILURE);
                 }
-                char* op = (char*)malloc(2 * sizeof(char));
-                op[0] = optrStack[optrTop--];
-                op[1] = '\0';
-                char* resultStr = (char*)malloc(2 * sizeof(char));
-                if (!resultStr) {
-                    printf("内存分配失败\n");
-                    exit(EXIT_FAILURE);
-                }
-                sprintf(resultStr, "%s", op); // 将运算符转换为字符串
+                char op = optrStack[optrTop--];
+                char* resultStr = operatorToString(op);
                 opndStack[++opndTop] = resultStr;
                 printStacks(optrStack, optrTop, opndStack, opndTop);
             }
@@ -170,15 +586,8 @@ char** infixToPostfix(const char* infix) {
                 free(opndStack);
                 exit(EXIT_FAILURE);
             }
-            char* op = (char*)malloc(2 * sizeof(char));
-            op[0] = optrStack[optrTop--];
-            op[1] = '\0';
-            char* resultStr = (char*)malloc(2 * sizeof(char));
-            if (!resultStr) {
-                printf("内存分配失败\n");
-                exit(EXIT_FAILURE);
-            }
-            sprintf(resultStr, "%s", op); // 将运算符转换为字符串
+            char op = optrStack[optrTop--];
+            char* resultStr = operatorToString(op);
             opndStack[++opndTop] = resultStr;
             printStacks(optrStack, optrTop, opndStack, opndTop);
         }
@@ -211,15 +620,8 @@ char** infixToPostfix(const char* infix) {
             free(opndStack);
             exit(EXIT_FAILURE);
         }
-        char* op = (char*)malloc(2 * sizeof(char));
-        op[0] = optrStack[optrTop--];
-        op[1] = '\0';
-        char* resultStr = (char*)malloc(2 * sizeof(char));
-        if (!resultStr) {
-            printf("内存分配失败\n");
-            exit(EXIT_FAILURE);
-        }
-        sprintf(resultStr, "%s", op); // 将运算符转换为字符串
+        char op = optrStack[optrTop--];
+        char* resultStr = operatorToString(op);
         opndStack[++opndTop] = resultStr;
         printStacks(optrStack, optrTop, opndStack, opndTop);
     }
@@ -286,7 +688,7 @@ int postfixExpressionCompute(char** postfix) {
 }
 
 int main() {
-    const char* expression = "5+2*5+(6/3+7*3)+2";
+    const char* expression = "5+2*5+(60/3+7*3)+2";
     char** postfix = infixToPostfix(expression);
     printf("后缀表达式: ");
     for (int i = 0; postfix[i] != NULL; i++) {
@@ -299,22 +701,22 @@ int main() {
     }
     free(postfix);
     return 0;
-}</code></pre><p>输出结果</p><pre><code>中缀表达式: 5+2*5+(6/3+7*3)+2
+}</code></pre><p>输出结果</p><pre><code>中缀表达式: 5+2*5+(60/3+7*3)+2
 
 读取字符：5
 将操作数 5 压入 OPND 栈
 OPTR栈: 空
-OPND栈: 5
+OPND栈: 5 
 
 读取字符：+
 将运算符 '+' 压入 OPTR 栈
-OPTR栈: +
-OPND栈: 5
+OPTR栈: + 
+OPND栈: 5 
 
 读取字符：2
 将操作数 2 压入 OPND 栈
-OPTR栈: +
-OPND栈: 5 2
+OPTR栈: + 
+OPND栈: 5 2 
 
 读取字符：*
 将运算符 '*' 压入 OPTR 栈
@@ -343,66 +745,66 @@ OPTR栈: + (
 OPND栈: 5 2 5 * +
 
 读取字符：6
-将操作数 6 压入 OPND 栈
+将操作数 60 压入 OPND 栈
 OPTR栈: + (
-OPND栈: 5 2 5 * + 6
+OPND栈: 5 2 5 * + 60
 
 读取字符：/
 将运算符 '/' 压入 OPTR 栈
 OPTR栈: + ( /
-OPND栈: 5 2 5 * + 6
+OPND栈: 5 2 5 * + 60
 
 读取字符：3
 将操作数 3 压入 OPND 栈
 OPTR栈: + ( /
-OPND栈: 5 2 5 * + 6 3
+OPND栈: 5 2 5 * + 60 3
 
 读取字符：+
 OPTR栈: + (
-OPND栈: 5 2 5 * + 6 3 /
+OPND栈: 5 2 5 * + 60 3 /
 
 将运算符 '+' 压入 OPTR 栈
 OPTR栈: + ( +
-OPND栈: 5 2 5 * + 6 3 /
+OPND栈: 5 2 5 * + 60 3 /
 
 读取字符：7
 将操作数 7 压入 OPND 栈
 OPTR栈: + ( +
-OPND栈: 5 2 5 * + 6 3 / 7
+OPND栈: 5 2 5 * + 60 3 / 7
 
 读取字符：*
 将运算符 '*' 压入 OPTR 栈
 OPTR栈: + ( + *
-OPND栈: 5 2 5 * + 6 3 / 7
+OPND栈: 5 2 5 * + 60 3 / 7
 
 读取字符：3
 将操作数 3 压入 OPND 栈
 OPTR栈: + ( + *
-OPND栈: 5 2 5 * + 6 3 / 7 3
+OPND栈: 5 2 5 * + 60 3 / 7 3
 
 读取字符：)
 遇到 ')'，处理括号内的所有运算
 OPTR栈: + ( +
-OPND栈: 5 2 5 * + 6 3 / 7 3 *
+OPND栈: 5 2 5 * + 60 3 / 7 3 *
 
 OPTR栈: + (
-OPND栈: 5 2 5 * + 6 3 / 7 3 * +
+OPND栈: 5 2 5 * + 60 3 / 7 3 * +
 
 读取字符：+
 OPTR栈: 空
-OPND栈: 5 2 5 * + 6 3 / 7 3 * + +
+OPND栈: 5 2 5 * + 60 3 / 7 3 * + +
 
 将运算符 '+' 压入 OPTR 栈
 OPTR栈: +
-OPND栈: 5 2 5 * + 6 3 / 7 3 * + +
+OPND栈: 5 2 5 * + 60 3 / 7 3 * + +
 
 读取字符：2
 将操作数 2 压入 OPND 栈
 OPTR栈: +
-OPND栈: 5 2 5 * + 6 3 / 7 3 * + + 2
+OPND栈: 5 2 5 * + 60 3 / 7 3 * + + 2
 
 OPTR栈: 空
-OPND栈: 5 2 5 * + 6 3 / 7 3 * + + 2 +
+OPND栈: 5 2 5 * + 60 3 / 7 3 * + + 2 +
 
-后缀表达式: 5 2 5 * + 6 3 / 7 3 * + + 2 +
-后缀表达式求值: 40</code></pre></div><div id="comment"><div id="waline-container"></div></div></div><footer id="footer"><div id="footer-wrap"><div>&copy; 2024 - 2024 Orion Blog<span id="footer-icon"><i class="fa-solid fa-font-awesome fa-fw"></i></span> &commat;Orion</div><div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a></div></div></footer></div><transition name="fade"><div id="preview" ref="preview" v-show="previewShow"><img id="preview-content" ref="previewContent"></div></transition></div><script src="/js/main.js"></script><script>Waline.init({el:"#waline-container",serverURL:"https://www.orionverse-comment.blog/",commentCount:!0,pageview:!0,emoji:"https://unpkg.com/@waline/emojis@1.0.1/weibo,https://unpkg.com/@waline/emojis@1.0.1/alus,https://unpkg.com/@waline/emojis@1.0.1/bilibili,https://unpkg.com/@waline/emojis@1.0.1/qq,https://unpkg.com/@waline/emojis@1.0.1/tieba,https://unpkg.com/@waline/emojis@1.0.1/tw-emoji".split(","),meta:"nick,mail,link".split(","),requiredMeta:"nick".split(","),lang:"zh-CN",wordLimit:0,pageSize:"10",login:"enable"})</script></body></html>
+后缀表达式: 5 2 5 * + 60 3 / 7 3 * + + 2 +
+后缀表达式求值: 58</code></pre></div><div id="comment"><div id="waline-container"></div></div></div><footer id="footer"><div id="footer-wrap"><div>&copy; 2024 - 2024 Orion Blog<span id="footer-icon"><i class="fa-solid fa-font-awesome fa-fw"></i></span> &commat;Orion</div><div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a></div></div></footer></div><transition name="fade"><div id="preview" ref="preview" v-show="previewShow"><img id="preview-content" ref="previewContent"></div></transition></div><script src="/js/main.js"></script><script>Waline.init({el:"#waline-container",serverURL:"https://www.orionverse-comment.blog/",commentCount:!0,pageview:!0,emoji:"https://unpkg.com/@waline/emojis@1.0.1/weibo,https://unpkg.com/@waline/emojis@1.0.1/alus,https://unpkg.com/@waline/emojis@1.0.1/bilibili,https://unpkg.com/@waline/emojis@1.0.1/qq,https://unpkg.com/@waline/emojis@1.0.1/tieba,https://unpkg.com/@waline/emojis@1.0.1/tw-emoji".split(","),meta:"nick,mail,link".split(","),requiredMeta:"nick".split(","),lang:"zh-CN",wordLimit:0,pageSize:"10",login:"enable"})</script></body></html>
